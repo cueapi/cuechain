@@ -165,4 +165,51 @@ describe('retry with failure context', () => {
     expect(result.ok).toBe(false)
     expect(attempts).toBe(1)
   })
+
+  it('throws RangeError when maxAttempts is 0', () => {
+    expect(() =>
+      defineStep({
+        name: 'bad-retry',
+        input: z.object({ x: z.number() }),
+        output: z.object({ y: z.number() }),
+        retry: { maxAttempts: 0 },
+        run: async (input) => ({ y: input.x }),
+      }),
+    ).toThrow(RangeError)
+  })
+
+  it('throws RangeError when maxAttempts exceeds 20', () => {
+    expect(() =>
+      defineStep({
+        name: 'bad-retry',
+        input: z.object({ x: z.number() }),
+        output: z.object({ y: z.number() }),
+        retry: { maxAttempts: 21 },
+        run: async (input) => ({ y: input.x }),
+      }),
+    ).toThrow(RangeError)
+  })
+
+  it('throws RangeError when maxAttempts is not an integer', () => {
+    expect(() =>
+      defineStep({
+        name: 'bad-retry',
+        input: z.object({ x: z.number() }),
+        output: z.object({ y: z.number() }),
+        retry: { maxAttempts: 2.5 },
+        run: async (input) => ({ y: input.x }),
+      }),
+    ).toThrow(RangeError)
+  })
+
+  it('accepts maxAttempts of 20 (upper bound)', async () => {
+    const step = defineStep({
+      name: 'max-retry',
+      input: z.object({ x: z.number() }),
+      output: z.object({ y: z.number() }),
+      retry: { maxAttempts: 20 },
+      run: async (input) => ({ y: input.x }),
+    })
+    expect(step.retry.maxAttempts).toBe(20)
+  })
 })

@@ -1,0 +1,5 @@
+# Require review from @govindkavaturi-art for critical paths
+src/*            @govindkavaturi-art
+.github/*        @govindkavaturi-art
+package.json     @govindkavaturi-art
+tsconfig.json    @govindkavaturi-art

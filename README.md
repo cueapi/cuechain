@@ -208,6 +208,33 @@ const desc = myPipeline.describe()
 
 Schemas are serialized as JSON Schema via `zod-to-json-schema`.
 
+## Handling Failures Safely
+
+When a step fails, the `Failure` object contains the raw `input`, `output`, and `error.message` from the step. This is useful for debugging but may contain sensitive data if your step processes PII, API keys, or other confidential information.
+
+**Before exposing failures to end users, logs, or monitoring systems, sanitize the failure object:**
+
+```typescript
+const result = await myPipeline.run(input)
+
+if (!result.ok) {
+  // Internal logging — full context
+  logger.debug('Pipeline failure', result.failure)
+
+  // User-facing — redact raw data
+  const safeError = {
+    step: result.failure.step,
+    reason: result.failure.reason,
+    type: result.failure.type,
+    attempts: result.failure.attempts,
+    // Omit: input, output (may contain sensitive data)
+  }
+  return { error: safeError }
+}
+```
+
+A pipeline-level `onFailure` redaction hook is planned for v0.2.
+
 ## Cuechain + CueAPI
 
 Cuechain verifies contracts between steps. [CueAPI](https://cueapi.ai) verifies outcomes against reality. Use one, use both.

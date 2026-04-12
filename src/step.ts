@@ -26,13 +26,23 @@ import type { Step, StepConfig } from './types.js'
 export function defineStep<TInput, TOutput>(
   config: StepConfig<TInput, TOutput>,
 ): Step<TInput, TOutput> {
+  const maxAttempts = config.retry?.maxAttempts ?? 1
+
+  if (maxAttempts < 1 || maxAttempts > 20) {
+    throw new RangeError(`maxAttempts must be between 1 and 20 (got ${maxAttempts})`)
+  }
+
+  if (!Number.isInteger(maxAttempts)) {
+    throw new RangeError(`maxAttempts must be an integer (got ${maxAttempts})`)
+  }
+
   return {
     name: config.name,
     inputSchema: config.input as z.ZodType<TInput>,
     outputSchema: config.output as z.ZodType<TOutput>,
     gates: config.gates ?? [],
     retry: {
-      maxAttempts: config.retry?.maxAttempts ?? 1,
+      maxAttempts,
       on: config.retry?.on ?? ['schema', 'gate'],
     },
     run: config.run,
