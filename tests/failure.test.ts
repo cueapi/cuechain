@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
-import { defineStep, pipeline, PipelineError } from '../src/index.js'
+import { PipelineError, defineStep, pipeline } from '../src/index.js'
 
 describe('structured failures', () => {
   it('schema_input failure has correct shape', async () => {

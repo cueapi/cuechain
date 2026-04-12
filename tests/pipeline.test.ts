@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { z } from 'zod'
-import { defineStep, pipeline, PipelineError } from '../src/index.js'
+import { PipelineError, defineStep, pipeline } from '../src/index.js'
 
 const double = defineStep({
   name: 'double',
@@ -9,7 +9,7 @@ const double = defineStep({
   run: async (input) => ({ value: input.value * 2 }),
 })
 
-const toString = defineStep({
+const toText = defineStep({
   name: 'to-string',
   input: z.object({ value: z.number() }),
   output: z.object({ text: z.string() }),
@@ -28,7 +28,7 @@ describe('pipeline', () => {
   })
 
   it('chains multiple steps', async () => {
-    const p = pipeline('multi').step(double).step(toString)
+    const p = pipeline('multi').step(double).step(toText)
     const result = await p.run({ value: 21 })
 
     expect(result.ok).toBe(true)
@@ -54,7 +54,7 @@ describe('pipeline', () => {
       name: 'bad-output',
       input: z.object({ x: z.number() }),
       output: z.object({ y: z.string() }),
-      run: async (input) => ({ y: input.x } as unknown as { y: string }),
+      run: async (input) => ({ y: input.x }) as unknown as { y: string },
     })
 
     const p = pipeline('bad-output').step(badStep)
@@ -117,15 +117,15 @@ describe('pipeline', () => {
   })
 
   it('describe() returns pipeline metadata', () => {
-    const p = pipeline('described').step(double).step(toString)
+    const p = pipeline('described').step(double).step(toText)
     const desc = p.describe()
 
     expect(desc.name).toBe('described')
     expect(desc.steps).toHaveLength(2)
-    expect(desc.steps[0]!.name).toBe('double')
-    expect(desc.steps[1]!.name).toBe('to-string')
-    expect(desc.steps[0]!.inputSchema).toHaveProperty('type', 'object')
-    expect(desc.steps[0]!.outputSchema).toHaveProperty('type', 'object')
-    expect(desc.steps[0]!.gates).toBe(0)
+    expect(desc.steps[0]?.name).toBe('double')
+    expect(desc.steps[1]?.name).toBe('to-string')
+    expect(desc.steps[0]?.inputSchema).toHaveProperty('type', 'object')
+    expect(desc.steps[0]?.outputSchema).toHaveProperty('type', 'object')
+    expect(desc.steps[0]?.gates).toBe(0)
   })
 })
