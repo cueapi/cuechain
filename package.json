@@ -1,6 +1,6 @@
 {
   "name": "@cueapi/cuechain",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Contract-verification primitive for TypeScript AI agent pipelines",
   "type": "module",
   "main": "./dist/index.cjs",
