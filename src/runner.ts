@@ -20,11 +20,16 @@ function formatZodError(error: ZodError): string {
 function runGates(
   gates: Gate<unknown>[],
   output: unknown,
-): { reason: string; context?: unknown } | null {
+): { reason: string; context?: unknown; thrown?: boolean } | null {
   for (const gate of gates) {
-    const result = gate(output)
-    if (!result.ok) {
-      return { reason: result.reason, context: result.context }
+    try {
+      const result = gate(output)
+      if (!result.ok) {
+        return { reason: result.reason, context: result.context }
+      }
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : String(error)
+      return { reason: `Gate threw: ${reason}`, thrown: true }
     }
   }
   return null

@@ -86,4 +86,27 @@ describe('quality gates', () => {
       expect(result.failure.reason).toContain('expected 3 items, got 2')
     }
   })
+
+  it('attributes thrown gate exceptions as type gate', async () => {
+    const step = defineStep({
+      name: 'throwing-gate',
+      input: z.object({ x: z.number() }),
+      output: z.object({ y: z.number() }),
+      gates: [
+        () => {
+          throw new Error('gate exploded')
+        },
+      ],
+      run: async (input) => ({ y: input.x * 2 }),
+    })
+
+    const p = pipeline('throw-gate').step(step)
+    const result = await p.run({ x: 5 })
+
+    expect(result.ok).toBe(false)
+    if (!result.ok) {
+      expect(result.failure.type).toBe('gate')
+      expect(result.failure.reason).toContain('Gate threw: gate exploded')
+    }
+  })
 })
