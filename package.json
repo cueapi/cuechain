@@ -1,0 +1,77 @@
+{
+  "name": "@cueapi/cuechain",
+  "version": "0.0.1",
+  "description": "Contract-verification primitive for TypeScript AI agent pipelines",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check src/ tests/",
+    "lint:fix": "biome check --write src/ tests/",
+    "format": "biome format --write src/ tests/",
+    "ci": "pnpm typecheck && pnpm lint && pnpm test && pnpm build"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "pipeline",
+    "contract",
+    "verification",
+    "typescript",
+    "zod",
+    "workflow",
+    "cueapi"
+  ],
+  "author": "Vector Apps Inc",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cueapi/cuechain.git"
+  },
+  "homepage": "https://github.com/cueapi/cuechain",
+  "bugs": {
+    "url": "https://github.com/cueapi/cuechain/issues"
+  },
+  "dependencies": {
+    "zod-to-json-schema": "^3.24.0"
+  },
+  "peerDependencies": {
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@types/node": "^25.6.0",
+    "tsup": "^8.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.5.0",
+    "vitest": "^3.0.0",
+    "zod": "^3.24.0",
+    "zod-to-json-schema": "^3.24.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "esbuild"
+    ]
+  }
+}
