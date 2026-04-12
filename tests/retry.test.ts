@@ -63,9 +63,9 @@ describe('retry with failure context', () => {
     expect(contexts).toHaveLength(2)
     expect(contexts[0]).toBeUndefined() // first attempt
     expect(contexts[1]).toBeDefined() // second attempt has context
-    expect(contexts[1]!.type).toBe('gate')
-    expect(contexts[1]!.attempt).toBe(1)
-    expect(contexts[1]!.reason).toContain('title too long')
+    expect(contexts[1]?.type).toBe('gate')
+    expect(contexts[1]?.attempt).toBe(1)
+    expect(contexts[1]?.reason).toContain('title too long')
   })
 
   it('exhausts retries and returns structured failure', async () => {

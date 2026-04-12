@@ -1,5 +1,5 @@
 import type { ZodError } from 'zod'
-import type { FailureContext, Failure, Gate, Result, Step } from './types.js'
+import type { Failure, FailureContext, Gate, Result, Step } from './types.js'
 
 /**
  * Format a ZodError into a human-readable reason string.
@@ -17,7 +17,10 @@ function formatZodError(error: ZodError): string {
  * Run quality gates against a step's output.
  * Returns the first failure, or null if all gates pass.
  */
-function runGates(gates: Gate<unknown>[], output: unknown): { reason: string; context?: unknown } | null {
+function runGates(
+  gates: Gate<unknown>[],
+  output: unknown,
+): { reason: string; context?: unknown } | null {
   for (const gate of gates) {
     const result = gate(output)
     if (!result.ok) {

@@ -45,9 +45,7 @@ describe('quality gates', () => {
       gates: [
         (out) => (out.text.length > 0 ? { ok: true } : { ok: false, reason: 'empty' }),
         (out) =>
-          out.text.length < 10
-            ? { ok: true }
-            : { ok: false, reason: 'too long (max 10 chars)' },
+          out.text.length < 10 ? { ok: true } : { ok: false, reason: 'too long (max 10 chars)' },
         (_out) => ({ ok: false, reason: 'this gate should not run' }),
       ],
       run: async (input) => ({ text: input.text.repeat(5) }),

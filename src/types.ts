@@ -4,9 +4,7 @@ import type { z } from 'zod'
  * Result of a quality gate check.
  * Gates are pure synchronous functions — no LLM calls, no async.
  */
-export type GateResult =
-  | { ok: true }
-  | { ok: false; reason: string; context?: unknown }
+export type GateResult = { ok: true } | { ok: false; reason: string; context?: unknown }
 
 /**
  * A quality gate function. Receives a step's validated output
@@ -83,9 +81,7 @@ export interface Failure {
 /**
  * Pipeline result type. Success or structured failure.
  */
-export type Result<T> =
-  | { ok: true; value: T }
-  | { ok: false; failure: Failure }
+export type Result<T> = { ok: true; value: T } | { ok: false; failure: Failure }
 
 /**
  * Metadata returned by pipeline.describe().
