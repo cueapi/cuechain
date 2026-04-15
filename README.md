@@ -1,6 +1,6 @@
 # @cueapi/cuechain
 
-> Cuechain is not an LLM chaining framework. It is a contract verification primitive for TypeScript pipelines.
+> Cuechain is a contract verification primitive for TypeScript pipelines.
 
 [![CI](https://github.com/cueapi/cuechain/actions/workflows/ci.yml/badge.svg)](https://github.com/cueapi/cuechain/actions)
 [![npm](https://img.shields.io/npm/v/@cueapi/cuechain)](https://www.npmjs.com/package/@cueapi/cuechain)
