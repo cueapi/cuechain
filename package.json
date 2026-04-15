@@ -1,7 +1,7 @@
 {
   "name": "@cueapi/cuechain",
-  "version": "0.0.2",
-  "description": "Contract-verification primitive for TypeScript AI agent pipelines",
+  "version": "0.0.3",
+  "description": "TypeScript primitive for verifying contracts between LLM pipeline steps. Typed inputs/outputs via Zod, quality gates with retry, and failure context that makes silent agent failure impossible.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -34,13 +34,25 @@
   "keywords": [
     "ai",
     "agent",
+    "agents",
+    "ai-agents",
+    "agent-infrastructure",
     "pipeline",
     "contract",
     "verification",
     "typescript",
     "zod",
     "workflow",
-    "cueapi"
+    "llm",
+    "llm-chain",
+    "llm-workflow",
+    "llm-observability",
+    "accountability",
+    "quality-gate",
+    "cueapi",
+    "claude",
+    "gpt",
+    "gemini"
   ],
   "author": "Vector Apps Inc",
   "license": "MIT",
@@ -48,7 +60,7 @@
     "type": "git",
     "url": "https://github.com/cueapi/cuechain.git"
   },
-  "homepage": "https://github.com/cueapi/cuechain",
+  "homepage": "https://cueapi.ai",
   "bugs": {
     "url": "https://github.com/cueapi/cuechain/issues"
   },
