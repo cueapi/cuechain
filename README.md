@@ -166,7 +166,7 @@ const step = defineStep({
 
 ### 5. Structured Failures
 
-Pipelines return `Result<T>` — either success with a value, or a structured failure identifying exactly what went wrong.
+Pipelines return `Result<T>`: either success with a value, or a structured failure identifying exactly what went wrong.
 
 ```typescript
 const result = await myPipeline.run(input)
@@ -218,10 +218,10 @@ When a step fails, the `Failure` object contains the raw `input`, `output`, and 
 const result = await myPipeline.run(input)
 
 if (!result.ok) {
-  // Internal logging — full context
+  // Internal logging: full context
   logger.debug('Pipeline failure', result.failure)
 
-  // User-facing — redact raw data
+  // User-facing: redact raw data
   const safeError = {
     step: result.failure.step,
     reason: result.failure.reason,
@@ -239,7 +239,7 @@ A pipeline-level `onFailure` redaction hook is planned for v0.2.
 
 Cuechain verifies contracts between steps. [CueAPI](https://cueapi.ai) verifies outcomes against reality. Use one, use both.
 
-**Standalone Cuechain:** run a contract-verified pipeline from any trigger — a button click, an HTTP handler, a test, a local script. No infrastructure required.
+**Standalone Cuechain:** run a contract-verified pipeline from any trigger. A button click, an HTTP handler, a test, a local script. No infrastructure required.
 
 **Standalone CueAPI:** schedule a cue that fires a webhook. The handler does whatever it wants internally. No Cuechain required.
 
@@ -279,7 +279,7 @@ Create a pipeline builder. Chain `.step()` to add steps.
 
 ### `Pipeline.run(input)`
 
-Returns `Result<T>` — `{ ok: true, value }` or `{ ok: false, failure }`.
+Returns `Result<T>`: `{ ok: true, value }` or `{ ok: false, failure }`.
 
 ### `Pipeline.runOrThrow(input)`
 
